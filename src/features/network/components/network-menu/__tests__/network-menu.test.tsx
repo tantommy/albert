@@ -15,7 +15,7 @@ describe("NetworkMenu", () => {
     render(<NetworkMenu />)
     expect(screen.getAllByText(/localhost/i).length).toBe(2)
   })
-  xit("should create a new network", async () => {
+  it("should create a new network", async () => {
     const activeNetwork = setupNetworkMenu()
     const addNewBtn = screen.getByText(/add network/i)
     userEvent.click(addNewBtn)
@@ -31,12 +31,17 @@ describe("NetworkMenu", () => {
     userEvent.type(urlInput, "test-network/api")
     userEvent.click(saveBtn)
 
+    await act(async () => {
+      return new Promise(res => {
+        setTimeout(() => res(), 3000)
+      })
+    })
+
     await waitForElementToBeRemoved(modal)
     expect(modal).not.toBeInTheDocument()
     expect(within(activeNetwork).getByText("test-network")).toBeInTheDocument()
   })
   it("should remove a network", async function () {
-    jest.setTimeout(30000)
     await setupEditNetwork()
     const modal = screen.getByTestId("network-create-update-contents")
     const removeInput = within(modal).getByLabelText(/remove network/i)
@@ -51,9 +56,6 @@ describe("NetworkMenu", () => {
         setTimeout(() => res(), 3000)
       })
     })
-    // await waitFor(() => {
-    //   return new Promise(res => {})
-    // })
     await waitFor(() => expect(modal).not.toBeInTheDocument())
     // await waitForElementToBeRemoved(modal)
     expect(screen.queryByText(/localhost/i)).not.toBeInTheDocument()
