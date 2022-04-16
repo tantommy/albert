@@ -33,7 +33,7 @@ describe("NetworkMenu", () => {
     expect(modal).not.toBeInTheDocument()
     expect(within(activeNetwork).getByText("test-network")).toBeInTheDocument()
   })
-  it("should remove a network", async () => {
+  xit("should remove a network", async () => {
     await setupEditNetwork()
     const modal = screen.getByTestId("network-create-update-contents")
     const removeInput = within(modal).getByLabelText(/remove network/i)

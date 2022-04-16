@@ -187,8 +187,6 @@ describe("home page", () => {
     expect(secondTxn.getByText(/receive/i)).toBeInTheDocument()
     expect(secondTxn.getByText(/\+0.000000003/i)).toBeInTheDocument()
     expect(secondTxn.getByText(/4\/8\/2022, 8:01:00 AM/i)).toBeInTheDocument()
-
-    screen.debug(rows)
   })
   it("should show list of account transaction history", async () => {
     const { activityTab } = setupHome()
