@@ -3,7 +3,7 @@ on:
   push:
   pull_request:
 jobs:
-  build_and_test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,3 +13,19 @@ jobs:
       - run: npm install
       - run: npm run test
       - run: npm run build
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.14.0'
+      - run: npm ci
+      - run: npm run test -- --coverage
+      - name: 'Upload coverage report'
+        uses: actions/upload-artifact@v2
+        with:
+          name: jest-coverage
+          path: coverage
+          retention-days: 5

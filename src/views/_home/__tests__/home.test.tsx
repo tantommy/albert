@@ -120,7 +120,7 @@ describe("home page", () => {
     expect(screen.getByText(/ghi/i)).toBeInTheDocument()
     expect(screen.getByText("0.005")).toBeInTheDocument()
   })
-  xit("should display an error message", async () => {
+  it("should display an error message", async () => {
     useNetworkContext.mockImplementationOnce(() => {
       const mock = getMockNetwork()
       return {
