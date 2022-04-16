@@ -35,6 +35,7 @@ describe("NetworkMenu", () => {
     expect(within(activeNetwork).getByText("test-network")).toBeInTheDocument()
   })
   it("should remove a network", async function () {
+    jest.setTimeout(30000)
     await setupEditNetwork()
     const modal = screen.getByTestId("network-create-update-contents")
     const removeInput = within(modal).getByLabelText(/remove network/i)
