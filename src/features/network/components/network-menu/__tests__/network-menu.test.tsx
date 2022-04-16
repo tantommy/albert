@@ -6,7 +6,6 @@ import {
   fireEvent,
   within,
   waitFor,
-  waitForElementToBeRemoved,
 } from "test/test-utils"
 import { NetworkMenu } from "../network-menu"
 
@@ -33,12 +32,10 @@ describe("NetworkMenu", () => {
 
     await act(async () => {
       return new Promise(res => {
-        setTimeout(() => res(), 3000)
+        setTimeout(() => res(), 1000)
       })
     })
-
-    await waitForElementToBeRemoved(modal)
-    expect(modal).not.toBeInTheDocument()
+    await waitFor(() => expect(modal).not.toBeInTheDocument())
     expect(within(activeNetwork).getByText("test-network")).toBeInTheDocument()
   })
   it("should remove a network", async function () {
@@ -53,7 +50,7 @@ describe("NetworkMenu", () => {
     userEvent.click(removeBtn)
     await act(async () => {
       return new Promise(res => {
-        setTimeout(() => res(), 3000)
+        setTimeout(() => res(), 1000)
       })
     })
     await waitFor(() => expect(modal).not.toBeInTheDocument())
