@@ -4,6 +4,7 @@ import {
   userEvent,
   fireEvent,
   within,
+  waitFor,
   waitForElementToBeRemoved,
 } from "test/test-utils"
 import { NetworkMenu } from "../network-menu"
@@ -33,7 +34,7 @@ describe("NetworkMenu", () => {
     expect(modal).not.toBeInTheDocument()
     expect(within(activeNetwork).getByText("test-network")).toBeInTheDocument()
   })
-  xit("should remove a network", async () => {
+  it("should remove a network", async function () {
     await setupEditNetwork()
     const modal = screen.getByTestId("network-create-update-contents")
     const removeInput = within(modal).getByLabelText(/remove network/i)
@@ -43,7 +44,8 @@ describe("NetworkMenu", () => {
     userEvent.type(removeInput, "/api")
     expect(removeBtn).not.toBeDisabled()
     userEvent.click(removeBtn)
-    await waitForElementToBeRemoved(modal)
+    await waitFor(() => expect(modal).not.toBeInTheDocument())
+    // await waitForElementToBeRemoved(modal)
     expect(screen.queryByText(/localhost/i)).not.toBeInTheDocument()
     // we've removed all the networks
     expect(screen.getByText(/no network selected/i)).toBeInTheDocument()
