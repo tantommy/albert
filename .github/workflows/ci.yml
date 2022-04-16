@@ -11,7 +11,6 @@ jobs:
         with:
           node-version: '16.14.0'
       - run: npm install
-      - run: npm run test
       - run: npm run build
   test:
     needs: [build]
@@ -29,3 +28,14 @@ jobs:
           name: jest-coverage
           path: coverage
           retention-days: 5
+  upload-coverage:
+    needs: [jest]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download coverage reports
+        uses: actions/download-artifact@v2
+      - uses: codecov/codecov-action@v2
+        with:
+          files: ./jest-coverage/coverage-final.json
+          flags: jest
