@@ -28,4 +28,5 @@ jobs:
           name: code-coverage
           path: coverage
           retention-days: 7
-      - uses: romeovs/lcov-reporter-action@v0.2.16
+      - name: 'Report coverage'
+        uses: romeovs/lcov-reporter-action@v0.2.16
