@@ -62,9 +62,7 @@ describe("<SendAsset />", () => {
       within(form).getByText(new RegExp(selectedAssetSymbol, "i")),
     ).toBeInTheDocument()
     expect(
-      within(form).getByText(
-        new RegExp("balance: " + selectedAssetBalance.toLocaleString(), "i"),
-      ),
+      within(form).getByText(new RegExp("balance: 0.001", "i")),
     ).toBeInTheDocument()
 
     fireEvent.change(toInput, {

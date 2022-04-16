@@ -1,0 +1,41 @@
+name: Build And Test
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.14.0'
+      - run: npm install
+      - run: npm run build
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.14.0'
+      - run: npm ci
+      - run: npm run test -- --coverage
+      - name: 'Upload coverage report'
+        uses: actions/upload-artifact@v2
+        with:
+          name: jest-coverage
+          path: coverage
+          retention-days: 5
+  upload-coverage:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download coverage reports
+        uses: actions/download-artifact@v2
+      - uses: codecov/codecov-action@v2
+        with:
+          files: ./jest-coverage/coverage-final.json
+          flags: jest
