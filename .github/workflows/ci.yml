@@ -44,7 +44,7 @@ jobs:
           sourceRunId: ${{ github.event.workflow_run.id }}
   coverage:
     runs-on: ubuntu-latest
-    needs: [info. build_and_test]
+    needs: [info, build_and_test]
     if: >
       ${{ github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.conclusion == 'success' }}
