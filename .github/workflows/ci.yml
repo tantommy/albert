@@ -2,6 +2,7 @@ name: Build And Test
 on:
   - push
   - pull_request
+  - workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,5 +29,3 @@ jobs:
           name: code-coverage
           path: coverage
           retention-days: 7
-      - name: 'Report coverage'
-        uses: romeovs/lcov-reporter-action@v0.2.16
