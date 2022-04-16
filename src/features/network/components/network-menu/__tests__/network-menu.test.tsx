@@ -1,4 +1,5 @@
 import {
+  act,
   render,
   screen,
   userEvent,
@@ -45,6 +46,14 @@ describe("NetworkMenu", () => {
     userEvent.type(removeInput, "/api")
     expect(removeBtn).not.toBeDisabled()
     userEvent.click(removeBtn)
+    await act(async () => {
+      return new Promise(res => {
+        setTimeout(() => res(), 3000)
+      })
+    })
+    // await waitFor(() => {
+    //   return new Promise(res => {})
+    // })
     await waitFor(() => expect(modal).not.toBeInTheDocument())
     // await waitForElementToBeRemoved(modal)
     expect(screen.queryByText(/localhost/i)).not.toBeInTheDocument()
